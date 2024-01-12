@@ -21,9 +21,11 @@ namespace ProductPriceExchange.Server.Services.Implementation
                 .Select(c => new CountryResult 
                 { 
                     Id = c.Id, 
+                    Name = c.Name,
                     CountryCode = c.CountryCode, 
                     CurrencyCode = c.CurrencyCode 
                 })
+                .OrderBy(c => c.Id)
                 .ToListAsync();
         }
     }

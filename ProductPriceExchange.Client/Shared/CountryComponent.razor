@@ -6,20 +6,21 @@
         }
         else
         {
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" @onclick="ToggleDropdown">
-                    Code
-                </button>
-                <div class="dropdown-menu @(IsOpen ? "show" : "")" aria-labelledby="dropdownMenuButton">
-                    @foreach (var item in Countries)
-                    {
-                        var code = item.CurrencyCode;
-                        <a class="dropdown-item" @onclick="() => OnSelectCode(code)">@item.CountryCode</a>
-                    }
-                </div>
+            @if (!string.IsNullOrEmpty(SelectedCountry))
+            {
+                <h5>Selected: @SelectedCountry</h5>
+            }
+            <button class="btn btn-secondary dropdown-toggle" type="button" @onclick="ToggleDropdown">
+                Country
+            </button>
+            <div class="dropdown-menu @(IsOpen ? "show" : "")" aria-labelledby="dropdownMenuButton">
+                @foreach (var item in Countries)
+                {
+                    var code = item.CurrencyCode;
+                    <a class="dropdown-item" style="cursor: pointer;" @onclick="() => OnSelectCode(code)">@item.Name</a>
+                }
             </div>
-            <div class="row">
-            </div>
+            
         }
 
     </div>
@@ -35,6 +36,8 @@
     public bool IsOpen = false;
     public List<CountryResult> Countries;
     public string CountryKey = "countryData";
+    public string SelectedCountry;
+    public string SelectedRate;
     private PersistingComponentStateSubscription persistingSubscription;
     protected override async Task OnParametersSetAsync()
     {
@@ -55,6 +58,7 @@
     public async Task GetData()
     {
         Countries = await _countryCodeService.GetCountryCodes();
+        SelectedCountry = Countries.FirstOrDefault().Name;
     }
     private Task Persist()
     {
@@ -65,6 +69,7 @@
     public async Task OnSelectCode(string code)
     {
         CloseDropdown();
+        SelectedCountry = Countries.FirstOrDefault(c => c.CurrencyCode == code).Name;
         await _productState.ChangeRate(code);
     }
     public void ToggleDropdown()
