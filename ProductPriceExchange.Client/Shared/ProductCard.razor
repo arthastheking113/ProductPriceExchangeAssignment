@@ -13,12 +13,12 @@
 
     [Parameter]
     public decimal Price { get; set; }
-
+    
     public string DisplayPrice 
     { 
         get
         {
-            return string.Format("{0:C}", Price);
+            return string.Format("{0:C}", Price).Replace("¤", "");
         }
     }
 
