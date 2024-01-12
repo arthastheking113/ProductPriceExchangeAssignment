@@ -26,15 +26,24 @@ jobs:
         run: dotnet build ProductPriceExchange.Server/ProductPriceExchange.Server.csproj --configuration Release
 
       - name: Unit Test
-        run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+        run: dotnet test -l:trx;LogFileName=TestOutput.xml
 
       - name: Upload dotnet test results
         uses: actions/upload-artifact@v3
         with:
-         name: dotnet-results-${{ matrix.dotnet-version }}
-         path: TestResults-${{ matrix.dotnet-version }}
+         name: TestOutput
+         path: TestOutput.xml
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
+
+      - name: Test Summary
+        uses: test-summary/action@v2
+        with:
+          paths: |
+              test/results/**/TEST-*.xml
+              TestOutput.xml
+              test/results/**/TestOutput.xml
+        if: always()
 
       - name: Publish
         run: dotnet publish ProductPriceExchange.Server/ProductPriceExchange.Server.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
