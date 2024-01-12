@@ -12,6 +12,6 @@
 - .NET 8
 - Postgres SQL
 - EF Core
-- [Github Action](https://product-exchange.azurewebsites.net/) 
+- [Github Action](https://github.com/arthastheking113/ProductPriceExchangeAssignment/actions) 
 - Azure App Service
 - Nunit
