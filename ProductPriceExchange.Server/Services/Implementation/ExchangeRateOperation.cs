@@ -16,14 +16,15 @@ namespace ProductPriceExchange.Server.Services.Implementation
 
         public async Task<ExchangeResult> GetExchangeRates(string currencyCode)
         {
-            var currentTime = DateTime.UtcNow;
+            if (string.IsNullOrWhiteSpace(currencyCode)) throw new ArgumentNullException("Currency code is null or whitespace");
+            var currentTime = DateTimeOffset.UtcNow;
 
             var rate = await _context
                 .ExchangeRates
                 .AsNoTracking()
                 .Where(c => 
                     c.CurrencyCode.ToLower() == currencyCode.ToLower() &&
-                    c.ValidFromDate <= currentTime &&
+                    c.ValidFromDate.Date <= currentTime.Date &&
                     (
                         c.ValidToDate == null ||
                         (

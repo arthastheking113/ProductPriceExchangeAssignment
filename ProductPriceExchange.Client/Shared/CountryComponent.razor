@@ -10,7 +10,7 @@
             {
                 <h5>Selected: @SelectedCountry</h5>
             }
-            <button class="btn btn-secondary dropdown-toggle" type="button" @onclick="ToggleDropdown">
+            <button class="btn btn-secondary dropdown-toggle" id="country-drop-down" type="button" @onclick="ToggleDropdown">
                 Country
             </button>
             <div class="dropdown-menu @(IsOpen ? "show" : "")" aria-labelledby="dropdownMenuButton">

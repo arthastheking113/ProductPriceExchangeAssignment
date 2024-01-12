@@ -1,4 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+﻿# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
 name: Build and deploy ASP.Net Core app to Azure Web App - product-exchange
@@ -25,7 +25,18 @@ jobs:
       - name: Build with dotnet
         run: dotnet build ProductPriceExchange.Server/ProductPriceExchange.Server.csproj --configuration Release
 
-      - name: dotnet publish
+      - name: Unit Test
+        run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v3
+        with:
+         name: dotnet-results-${{ matrix.dotnet-version }}
+         path: TestResults-${{ matrix.dotnet-version }}
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
+
+      - name: Publish
         run: dotnet publish ProductPriceExchange.Server/ProductPriceExchange.Server.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
