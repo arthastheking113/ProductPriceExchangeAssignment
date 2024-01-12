@@ -9,5 +9,6 @@ namespace ProductPriceExchange.Shared
     public static class StaticData
     {
         public const string ApiName = "ProductPriceExchange.ServerAPI";
+        public const string ServerUrl = "_currentUrl";
     }
 }

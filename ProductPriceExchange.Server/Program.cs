@@ -92,6 +92,14 @@ namespace ProductPriceExchange.Server
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
+
+            app.Use((context, next) =>
+            {
+                var url = $"{context.Request.Scheme}://{context.Request.Host.Value}/";
+                System.Environment.SetEnvironmentVariable(StaticData.ServerUrl, url);
+                return next.Invoke();
+            });
+
             app.UseRouting();
 
             app.UseAntiforgery();

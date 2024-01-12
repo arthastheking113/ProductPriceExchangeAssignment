@@ -22,6 +22,12 @@ namespace ProductPriceExchange.ClientService.Services.Implementation
         {
             var client = _clientFactory.CreateClient(StaticData.ApiName);
 
+            if (client.BaseAddress is null)
+            {
+                var url = Environment.GetEnvironmentVariable(StaticData.ServerUrl);
+                client.BaseAddress = new Uri(url);
+            }
+
             return client;
         }
     }
