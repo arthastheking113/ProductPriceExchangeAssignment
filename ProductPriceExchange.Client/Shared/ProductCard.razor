@@ -1,0 +1,25 @@
+﻿<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Name</h5>
+        <p>@Desc</p>
+        <p>Price: <strong>@DisplayPrice</strong></p>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public string Name { get; set; }
+    [Parameter]
+    public string Desc { get; set; }
+
+    [Parameter]
+    public decimal Price { get; set; }
+
+    public string DisplayPrice 
+    { 
+        get
+        {
+            return string.Format("{0:C}", Price);
+        }
+    }
+
+}

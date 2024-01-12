@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2114FA07-3A44-4074-B696-EE8BD50AB63F}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		Senior Engineer Technical-Challange-Dataset.xlsx = Senior Engineer Technical-Challange-Dataset.xlsx
+		TJX Senior Engineer-code-challenge.pdf = TJX Senior Engineer-code-challenge.pdf
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductPriceExchange.Client", "ProductPriceExchange.Client\ProductPriceExchange.Client.csproj", "{AC34F3B5-15DF-4AC7-9FC8-262913ACEE7D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductPriceExchange.Shared", "ProductPriceExchange.Shared\ProductPriceExchange.Shared.csproj", "{5ED3CCDB-0FB8-49FC-BC39-26B7F952A4D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductPriceExchange.ClientService", "ProductPriceExchange.ClientService\ProductPriceExchange.ClientService.csproj", "{DD6046AF-ED8C-44F8-A686-EEAEE74835C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductPriceExchange.Server", "ProductPriceExchange.Server\ProductPriceExchange.Server.csproj", "{A8B9D922-3F4F-464A-9102-399A82B520CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductPriceExchange.UnitTest", "UnitTest\ProductPriceExchange.UnitTest.csproj", "{796C3A8D-35AA-438F-BD90-3EB4CF53D0B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC34F3B5-15DF-4AC7-9FC8-262913ACEE7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC34F3B5-15DF-4AC7-9FC8-262913ACEE7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC34F3B5-15DF-4AC7-9FC8-262913ACEE7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC34F3B5-15DF-4AC7-9FC8-262913ACEE7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ED3CCDB-0FB8-49FC-BC39-26B7F952A4D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED3CCDB-0FB8-49FC-BC39-26B7F952A4D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ED3CCDB-0FB8-49FC-BC39-26B7F952A4D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED3CCDB-0FB8-49FC-BC39-26B7F952A4D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD6046AF-ED8C-44F8-A686-EEAEE74835C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6046AF-ED8C-44F8-A686-EEAEE74835C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6046AF-ED8C-44F8-A686-EEAEE74835C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6046AF-ED8C-44F8-A686-EEAEE74835C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8B9D922-3F4F-464A-9102-399A82B520CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8B9D922-3F4F-464A-9102-399A82B520CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8B9D922-3F4F-464A-9102-399A82B520CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8B9D922-3F4F-464A-9102-399A82B520CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{796C3A8D-35AA-438F-BD90-3EB4CF53D0B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{796C3A8D-35AA-438F-BD90-3EB4CF53D0B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{796C3A8D-35AA-438F-BD90-3EB4CF53D0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{796C3A8D-35AA-438F-BD90-3EB4CF53D0B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2BECFC2-9463-4688-A6FD-2BB6CB1BB45A}
+	EndGlobalSection
+EndGlobal

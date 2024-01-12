@@ -1,0 +1,92 @@
+﻿<div class="row">
+    <div class="col">
+        @if (Countries == null)
+        {
+            <p><em>Getting countries code...</em></p>
+        }
+        else
+        {
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" @onclick="ToggleDropdown">
+                    Code
+                </button>
+                <div class="dropdown-menu @(IsOpen ? "show" : "")" aria-labelledby="dropdownMenuButton">
+                    @foreach (var item in Countries)
+                    {
+                        var code = item.CurrencyCode;
+                        <a class="dropdown-item" @onclick="() => OnSelectCode(code)">@item.CountryCode</a>
+                    }
+                </div>
+            </div>
+            <div class="row">
+            </div>
+        }
+
+    </div>
+</div>
+@code {
+
+    [Inject]
+    protected ICountryCodeService _countryCodeService { get; set; } = default!;
+    [Inject]
+    protected PersistentComponentState ApplicationState { get; set; } = default!;
+    [Inject]
+    protected IProductState _productState { get; set; } = default!;
+    public bool IsOpen = false;
+    public List<CountryResult> Countries;
+    public string CountryKey = "countryData";
+    private PersistingComponentStateSubscription persistingSubscription;
+    protected override async Task OnParametersSetAsync()
+    {
+        persistingSubscription =
+            ApplicationState.RegisterOnPersisting(Persist);
+        var isCountryCache = ApplicationState.TryTakeFromJson<List<CountryResult>>(CountryKey, out var storedCountryData);
+
+        if (isCountryCache)
+        {
+            Countries = storedCountryData;
+        }
+        else
+        {
+            await GetData();
+        }
+        StateHasChanged();
+    }
+    public async Task GetData()
+    {
+        Countries = await _countryCodeService.GetCountryCodes();
+    }
+    private Task Persist()
+    {
+        ApplicationState.PersistAsJson(CountryKey, Countries);
+        return Task.CompletedTask;
+    }
+
+    public async Task OnSelectCode(string code)
+    {
+        CloseDropdown();
+        await _productState.ChangeRate(code);
+    }
+    public void ToggleDropdown()
+    {
+        if(IsOpen)
+        {
+            CloseDropdown();
+        }
+        else
+        {
+            OpenDropdown();
+        }
+    }
+    public void OpenDropdown()
+    {
+        IsOpen = true;
+        StateHasChanged();
+    }
+    public void CloseDropdown()
+    {
+        IsOpen = false;
+        StateHasChanged();
+    }
+
+}

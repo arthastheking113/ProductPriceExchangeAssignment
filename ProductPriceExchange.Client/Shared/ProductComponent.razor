@@ -1,0 +1,146 @@
+﻿<div class="row">
+    <div class="col">
+        @if (IsLoading || Products == null)
+        {
+            <p><em>Getting products...</em></p>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (var item in Products)
+                {
+                    <div class="col-md-6">
+                        <ProductCard Name="@item.Name" Price="@item.Price" Desc="@item.Desc"></ProductCard>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+</div>
+
+@if (ShowWarning)
+{
+    <div class="modal" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Warning</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>Rate is not exist</h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+
+
+    [Inject]
+    protected IProductService _productService { get; set; } = default!;
+    [Inject]
+    protected IExchangeRateService _exchangeRateService { get; set; } = default!;
+    [Inject]
+    protected PersistentComponentState ApplicationState { get; set; } = default!;
+    [Inject]
+    protected IProductState _productState { get; set; } = default!;
+    public decimal Rate = 1;
+    public List<ProductResult> Products;
+
+    public bool ShowWarning = false;
+    public bool IsLoading = false;
+    public string ProductKey = "productData";
+    private PersistingComponentStateSubscription persistingSubscription;
+    protected override async Task OnParametersSetAsync()
+    {
+        persistingSubscription =
+            ApplicationState.RegisterOnPersisting(Persist);
+        var isProductCache = ApplicationState.TryTakeFromJson<List<ProductResult>>(ProductKey, out var storedProductData);
+
+        if (isProductCache)
+        {
+            IsLoading = false;
+            Products = storedProductData;
+        }
+        else
+        {
+            await GetData();
+        }
+        StateHasChanged();
+    }
+    private Task Persist()
+    {
+        ApplicationState.PersistAsJson(ProductKey, Products);
+        return Task.CompletedTask;
+    }
+
+    public async Task GetData()
+    {
+        IsLoading = true;
+        StateHasChanged();
+
+        Products = await _productService.GetProducts();
+
+        IsLoading = false;
+        StateHasChanged();
+    }
+    protected override void OnInitialized()
+    {
+        // subscribe to OnMessage event
+        _productState.OnMessage += MessageHandler;
+    }
+
+    public void Dispose()
+    {
+        // unsubscribe from OnMessage event
+        _productState.OnMessage -= MessageHandler;
+    }
+    public void UpdatePrice(decimal rate)
+    {
+        if (Products is not null && rate is not 0)
+        {
+            foreach (var item in Products)
+            {
+                item.Price = item.OriginalPrice * rate;
+            }
+        }
+    }
+    private async Task MessageHandler(string code)
+    {
+        IsLoading = true;
+        StateHasChanged();
+        ExchangeResult exchangeRate = await _exchangeRateService.GetExchangeRate(code);
+
+        if (exchangeRate?.Rate is null || exchangeRate.Rate is 0)
+        {
+            OpenModal();
+        }
+        else
+        {
+            UpdatePrice(exchangeRate.Rate);
+        }
+
+        IsLoading = false;
+        StateHasChanged();
+    }
+
+    public void OpenModal()
+    {
+        ShowWarning = true;
+        StateHasChanged();
+    }
+    public void CloseModal()
+    {
+        ShowWarning = false;
+        StateHasChanged();
+    }
+
+}
