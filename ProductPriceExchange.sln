@@ -5,6 +5,7 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2114FA07-3A44-4074-B696-EE8BD50AB63F}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\master_product-exchange.yml = .github\workflows\master_product-exchange.yml
 		README.md = README.md
 		Senior Engineer Technical-Challange-Dataset.xlsx = Senior Engineer Technical-Challange-Dataset.xlsx
 		TJX Senior Engineer-code-challenge.pdf = TJX Senior Engineer-code-challenge.pdf
