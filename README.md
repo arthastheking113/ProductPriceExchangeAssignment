@@ -1,8 +1,5 @@
 # Product Price Exchange App
 
-## App URL
-- https://product-exchange.azurewebsites.net/
-
 ## Tools and Software
 - Visual Studio
 - .NET 8
